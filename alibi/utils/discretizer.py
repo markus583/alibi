@@ -1,6 +1,5 @@
 import numpy as np
 
-from alibi.tests.utils import issorted
 from functools import partial
 from typing import Dict, Callable, List, Sequence, Union
 
@@ -66,8 +65,6 @@ class Discretizer(object):
 
         if len(qts.shape) != 1:
             raise ValueError("Expected 1D quantiles array!")
-        if not issorted(qts):
-            raise ValueError("Quantiles array should be sorted!")
         return np.searchsorted(qts, x)
 
     def bins(self, data: np.ndarray) -> List[np.ndarray]:
