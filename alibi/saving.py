@@ -8,7 +8,6 @@ import warnings
 
 import dill
 import numpy as np
-import tensorflow as tf
 
 if TYPE_CHECKING:
     from alibi.api.interfaces import Explainer
