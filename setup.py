@@ -36,17 +36,14 @@ setup(name='alibi',
           'numpy>=1.16.2, <2.0.0',
           'pandas>=0.23.3, <2.0.0',
           'scikit-learn>=0.20.2, <1.1.0',
-          'spacy[lookups]>=2.0.0, <4.0.0',
           'scikit-image>=0.14.2, !=0.17.1, <0.19',  # https://github.com/SeldonIO/alibi/issues/215
           'requests>=2.21.0, <3.0.0',
           'Pillow>=5.4.1, <9.0',
-          'tensorflow>=2.0.0, <2.7.0',
           'attrs>=19.2.0, <22.0.0',
           'scipy>=1.1.0, <2.0.0',
           'matplotlib>=3.0.0, <4.0.0',
           'typing-extensions>=3.7.2; python_version < "3.8"',  # https://github.com/SeldonIO/alibi/pull/248
           'dill>=0.3.0, <0.4.0',
-          'transformers>=4.7.0, <5.0.0',
           'tqdm>=4.28.1, <5.0.0'
       ],
       extras_require=extras_require,
