@@ -70,8 +70,8 @@ apidoc_extra_args = ['-d 6']
 
 # mock imports
 autodoc_mock_imports = ['sklearn', 'skimage', 'requests',
-                        'cv2', 'keras', 'seaborn', 'PIL', 'tensorflow', 'spacy',
-                        'catboost', 'dill', 'transformers', 'torch', 'matplotlib', 'mpl_toolkits']
+                        'cv2', 'keras', 'seaborn', 'PIL', 'spacy',
+                        'dill', 'matplotlib', 'mpl_toolkits']
 
 # Napoleon settings
 napoleon_google_docstring = True

@@ -1,9 +1,7 @@
 import copy
-import spacy
 import string
 import logging
 import numpy as np
-import tensorflow as tf
 
 from copy import deepcopy
 from functools import partial
@@ -23,14 +21,11 @@ if TYPE_CHECKING:
 logger = logging.getLogger(__name__)
 
 
-def _load_spacy_lexeme_prob(nlp: 'spacy.language.Language'):
+def _load_spacy_lexeme_prob(nlp):
     """
     This utility function loads the `lexeme_prob` table for a spacy model if it is not present.
     This is required to enable support for different spacy versions.
     """
-    import spacy
-    SPACY_VERSION = spacy.__version__.split('.')
-    MAJOR, MINOR = int(SPACY_VERSION[0]), int(SPACY_VERSION[1])
 
     if MAJOR == 2:
         if MINOR < 3:
@@ -52,7 +47,6 @@ def _load_spacy_lexeme_prob(nlp: 'spacy.language.Language'):
         # in spacy 3.x we need to manually add the tables
         # https://github.com/explosion/spaCy/discussions/6388#discussioncomment-331096
         if 'lexeme_prob' not in nlp.vocab.lookups.tables:
-            from spacy.lookups import load_lookups
             lookups = load_lookups(nlp.lang, ['lexeme_prob'])
             nlp.vocab.lookups.add_table('lexeme_prob', lookups.get_table('lexeme_prob'))  # type: ignore
 
@@ -61,7 +55,7 @@ def _load_spacy_lexeme_prob(nlp: 'spacy.language.Language'):
 
 class Neighbors(object):
 
-    def __init__(self, nlp_obj: 'spacy.language.Language', n_similar: int = 500, w_prob: float = -15.) -> None:
+    def __init__(self, nlp_obj, n_similar: int = 500, w_prob: float = -15.) -> None:
         """
         Initialize class identifying neighbouring words from the embedding for a given word.
 
@@ -163,7 +157,7 @@ class AnchorTextSampler:
 class UnknownSampler(AnchorTextSampler):
     UNK = "UNK"
 
-    def __init__(self, nlp: 'spacy.language.Language', perturb_opts: Dict):
+    def __init__(self, nlp, perturb_opts: Dict):
         """
         Initialize unknown sampler. This sampler replaces word with the `UNK` token.
 
@@ -259,7 +253,7 @@ class UnknownSampler(AnchorTextSampler):
 
 
 class SimilaritySampler(AnchorTextSampler):
-    def __init__(self, nlp: 'spacy.language.Language', perturb_opts: Dict):
+    def __init__(self, nlp, perturb_opts: Dict):
         """
         Initialize similarity sampler. This sampler replaces words with similar words.
 
@@ -1178,7 +1172,7 @@ class AnchorText(Explainer):
     def __init__(self,
                  predictor: Callable[[List[str]], np.ndarray],
                  sampling_strategy: str = 'unknown',
-                 nlp: Optional['spacy.language.Language'] = None,
+                 nlp = None,
                  language_model: Optional[LanguageModel] = None,
                  seed: int = 0,
                  **kwargs: Any) -> None:
@@ -1217,7 +1211,7 @@ class AnchorText(Explainer):
 
         # define model which can be either spacy object or LanguageModel
         # the initialization of the model happens in _validate_kwargs
-        self.model: Union['spacy.language.Language', LanguageModel]
+        self.model: LanguageModel
 
         # validate kwargs
         self.perturb_opts, all_opts = self._validate_kwargs(sampling_strategy=sampling_strategy, nlp=nlp,
@@ -1232,7 +1226,7 @@ class AnchorText(Explainer):
 
     def _validate_kwargs(self,
                          sampling_strategy: str,
-                         nlp: Optional['spacy.language.Language'] = None,
+                         nlp: = None,
                          language_model: Optional[LanguageModel] = None,
                          **kwargs: Any) -> Tuple[dict, dict]:
 

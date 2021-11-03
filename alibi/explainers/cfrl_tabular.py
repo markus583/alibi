@@ -10,8 +10,7 @@ from functools import partial
 from typing import Tuple, List, Dict, Callable, Union, Optional, TYPE_CHECKING
 
 if TYPE_CHECKING:
-    import torch
-    import tensorflow
+    pass
 
 if has_pytorch:
     # import pytorch backend
