@@ -5,9 +5,6 @@ The 'alibi.explainers' module includes feature importance, counterfactual and an
 from .ale import ALE, plot_ale
 from .anchor_tabular import AnchorTabular, DistributedAnchorTabular
 from .anchor_image import AnchorImage
-from .cfproto import CounterfactualProto, CounterFactualProto  # noqa: F401 TODO: remove in an upcoming release
-from .counterfactual import Counterfactual, CounterFactual  # noqa: F401 TODO: remove in an upcoming release
-from .integrated_gradients import IntegratedGradients
 from .cfrl_base import CounterfactualRL
 from .cfrl_tabular import CounterfactualRLTabular
 
